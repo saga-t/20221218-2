@@ -1,0 +1,33 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+plt.rcParams["font.size"]=20
+
+models=['CESM2','CNRM-CM6-1','CanESM5','HadGEM3-GC31-LL','IPSL-CM6A-LR','MIROC6','MPI-ESM1-2-LR','MRI-ESM2-0']
+n_model=len(models)
+i_starts=np.array([0,0,0,0,0,0,1,0])
+ys=np.array([])
+for i_model in range(n_model):
+    model=models[i_model]
+    pathname='../out/'+model+'/difference_from_amip-piForcing/'
+    name='net30'
+    filename=pathname+name+'.txt'
+    invalues=np.loadtxt(filename)
+    i_start=i_starts[i_model]
+    i_year=111-i_start
+    value=invalues[i_year]
+    lam_eqs=np.array([-0.657,-0.75,-0.648,-0.63,-0.748,-1.443,-1.393,-1.098])
+    lam_eq=lam_eqs[i_model]
+    y=lam_eq
+    ys=np.append(ys,y)
+    plt.scatter(lam_eq,value,s=100,label=model)
+print(ys)
+mean_ys=np.mean(ys)
+plt.axhline(y=mean_ys)
+#plt.legend()
+plt.grid()
+plt.minorticks_on()
+plt.tight_layout()
+filename='/home/saga-t/work/python/fig/'+name+'.png'
+plt.savefig(filename, dpi=300)
+plt.show()

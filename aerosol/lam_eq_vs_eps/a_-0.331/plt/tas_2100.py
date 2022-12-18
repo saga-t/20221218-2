@@ -1,0 +1,36 @@
+import numpy as np
+
+outvalues = np.array([])
+
+n_member=1000
+vars=['tas','tod','rtmt','lam']
+#vars=['net30','net30_cor','net30_int']
+#vars=['epsiron_gamma_T-T_d']
+vars=['tas']
+nvar=len(vars)
+for i_var in range(nvar):
+    var=vars[i_var]
+    invalues = np.array([])
+    dd=0.05
+    lam_eqs=np.arange(-2.0,-0.4,dd)
+    for i in range(len(lam_eqs)):
+        lam_eq=lam_eqs[i]
+        epss=np.arange(0.,4.05,dd)
+        for j in range(len(epss)):
+            eps=epss[j]
+            it=100
+            str_lam_eq=str(int(lam_eq*it)/it)
+            str_eps=str(int(eps*it)/it)
+            pathname='../out/lam_eq_'+str_lam_eq+'_eps_'+str_eps+'/'
+            name=var
+            filename=pathname+name+'.txt'
+            invalue=np.loadtxt(filename)
+            value=invalue[-1]
+            name=var+'_2100'
+            filename=pathname+name+'.txt'
+            out=value.reshape([1,])
+            np.savetxt(filename,out)
+            outvalues=np.append(outvalues,value)
+    pathname='../out/all/'
+    filename=pathname+name+'.txt'
+    np.savetxt(filename,outvalues)

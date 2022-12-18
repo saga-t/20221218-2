@@ -1,0 +1,28 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+plt.rcParams["font.size"]=20
+ylim_min=-2
+ylim_max=-0.5
+#plt.ylim(ylim_min,ylim_max)
+
+n_member=10
+for run in range(1,n_member+1):
+    pathname='../out/run'+str(run)+'/'
+    name='net30'
+    filename=pathname+name+'.txt'
+    y=np.loadtxt(filename)
+    x_min=1850
+    x_max=2100
+    x_min=1865
+    x_max=2086
+    nx=x_max-x_min+1
+    x=np.linspace(x_min,x_max,nx)
+    linewidth_value=3
+    plt.plot(x,y,linewidth=linewidth_value)
+plt.grid()
+plt.minorticks_on()
+plt.tight_layout()
+filename='/home/saga-t/work/python/fig/'+name+'.png'
+#plt.savefig(filename, dpi=300)
+plt.show()

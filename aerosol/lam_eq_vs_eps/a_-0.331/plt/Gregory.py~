@@ -1,0 +1,25 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+plt.rcParams["font.size"]=20
+
+pathname='../out/tmp/'
+name='tmp_lam_eq-1.03_eps1.34'
+filename=pathname+name+'.txt'
+dts=np.loadtxt(filename)
+pathname='../out/dn/'
+name='dn_lam_eq-1.03_eps1.34'
+filename=pathname+name+'.txt'
+dns=np.loadtxt(filename)
+filename='../DF/DF.txt'
+dfs=np.loadtxt(filename)
+values=np.array([])
+x=dts
+y=dns-dfs
+plt.scatter(x,y)
+plt.grid()
+plt.minorticks_on()
+plt.tight_layout()
+filename='/home/saga-t/work/python/fig/Gregory.png'
+plt.savefig(filename, dpi=300)
+plt.show()
